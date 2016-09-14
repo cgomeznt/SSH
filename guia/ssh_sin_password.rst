@@ -10,7 +10,7 @@ El servidor-02 debe tener instalado openssh-server y asegurarnos que podemos ini
 	# yum install openssh-server
 
 
-servidor-01 vamos a generar una llave pública.::
+servidor-01 vamos a generar una llave pública, puede ser rsa o dsa, ssh ver 1 soporta rsa y ssh ver 2 soporta ambas. ::
 
 	# ssh-keygen -b 4096 -t rsa
 
@@ -34,6 +34,32 @@ servidor-01 vamos a generar una llave pública.::
 	|      .o. .      |
 	|       ..        |
 	+-----------------+
+o.::
+
+	$ ssh-keygen -b 1024 -t dsa
+	Generating public/private dsa key pair.
+	Enter file in which to save the key (/home/cgome1/.ssh/id_dsa): 
+	/home/cgome1/.ssh/id_dsa already exists.
+	Overwrite (y/n)? y
+	Enter passphrase (empty for no passphrase): 
+	Enter same passphrase again: 
+	Your identification has been saved in /home/cgome1/.ssh/id_dsa.
+	Your public key has been saved in /home/cgome1/.ssh/id_dsa.pub.
+	The key fingerprint is:
+	4e:c8:b7:5f:72:ea:ec:79:ca:55:59:02:e4:6e:c7:19 cgome1@debian
+	The key's randomart image is:
+	+---[DSA 1024]----+
+	|           .o    |
+	|           . .   |
+	|            . E .|
+	|     . .   . . * |
+	|      o S   o *  |
+	|       + . . o   |
+	|        o . +    |
+	|         + B.    |
+	|         oXo     |
+	+-----------------+
+
 
 Listo, ya tenemos la llave pública… ahora falta dársela al servidor-02, para que pueda identificar desde que servidor y usuario le va permitir ingresar por ssh sin interaccion de solicitud de clave.::
 
