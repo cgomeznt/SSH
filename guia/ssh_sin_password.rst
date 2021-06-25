@@ -10,6 +10,12 @@ El servidor-02 debe tener instalado openssh-server y asegurarnos que podemos ini
 	# yum install openssh-server
 
 
+Agregar o descomentar la siguientes línea en el archivo  /etc/ssh/sshd_config::
+
+	PubkeyAuthentication yes
+	AuthorizedKeysFile     %home/.ssh/authorized_keys .ssh/authorized_keys .ssh/authorized_keys2
+	UseDNS no
+
 servidor-01 vamos a generar una llave pública, puede ser rsa o dsa, ssh ver 1 soporta rsa y ssh ver 2 soporta ambas. ::
 
 	# ssh-keygen -b 4096 -t rsa
@@ -86,6 +92,18 @@ Tambien si queremos se puede utilizar esta tecnica para copiar la llave publica.
 	# cat .ssh/id_rsa.pub | ssh usuario@servidordestino 'cat >> .ssh/authorized_keys'
 
 authorized_keys debe tener permisos 600 y con su respectivo dueño
+
+Si luego de hacer todos los pasos anteriores no te conectas, coloca el modo debug del ssh::
+
+	servidor-01# ssh root@servidor-02 -vv
+
+Y si llegaras a tener un error como este::
+
+	debug2: we did not send a packet, disable method
+
+Edita el  /etc/ssh/sshd_config y agrega esta linea::
+
+	PubkeyAcceptedKeyTypes +ssh-dss #this is the correct entry
 
 
 
