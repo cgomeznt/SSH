@@ -66,6 +66,7 @@ o.::
 	|         oXo     |
 	+-----------------+
 
+NOTA: La llave anterior creada solo va funcionar para realizar la conexión con el usuario que la creo, es decir, no funciona para todos los usuarios, solo para el que la creo.
 
 Listo, ya tenemos la llave pública… ahora falta dársela al servidor-02, para que pueda identificar desde que servidor y usuario le va permitir ingresar por ssh sin interaccion de solicitud de clave.::
 
@@ -90,8 +91,18 @@ Ahora solo resta establecer la conexión desde el servidor-01 al servidor-02 con
 Tambien si queremos se puede utilizar esta tecnica para copiar la llave publica.::
 
 	# cat .ssh/id_rsa.pub | ssh usuario@servidordestino 'cat >> .ssh/authorized_keys'
+	
+Tambien podemos copiar el contenido de la clave ".ssh/id_rsa.pub" y copiarlo dentro del ".ssh/authorized_keys"::
 
-authorized_keys debe tener permisos 600 y con su respectivo dueño
+	cat .ssh/id_rsa.pub
+	ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCNXJrNULbR4joZuwhIEeYSKb5/QtiUmNgL2kAAtW7Bjq2O0Sd+QSGkz2iyin9A6yg5HElZsjMQayRJgOoUPyYwuA5smlxMCw11SzFvhA/Lmn5AdzVFnXkb3IO9p0Odd219RrMSbwRthWOXGeelJFWx3fB+3l3EMZnChAnCQbfmheuaQ5hRixrUl7JPoGMd6mhNvg88ILydP2+Y0ButR5DXJC77ucSron2SRqr1EKb90OprnF0x9leP82IJuwY/dNjpXwExFs+tDwVnV2eG2edm0WR5JWVq/2TrVBmvRfn7R+jSQtnGwICcw0vgiEjkFbhftolbVIJFqloAMAzKNix root@openstack.local	
+
+Y en el servidor remoto editamos el '.ssh/authorized_keys' y agregamos la clave copiada::
+
+	vi .ssh/authorized_keys
+	ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCNXJrNULbR4joZuwhIEeYSKb5/QtiUmNgL2kAAtW7Bjq2O0Sd+QSGkz2iyin9A6yg5HElZsjMQayRJgOoUPyYwuA5smlxMCw11SzFvhA/Lmn5AdzVFnXkb3IO9p0Odd219RrMSbwRthWOXGeelJFWx3fB+3l3EMZnChAnCQbfmheuaQ5hRixrUl7JPoGMd6mhNvg88ILydP2+Y0ButR5DXJC77ucSron2SRqr1EKb90OprnF0x9leP82IJuwY/dNjpXwExFs+tDwVnV2eG2edm0WR5JWVq/2TrVBmvRfn7R+jSQtnGwICcw0vgiEjkFbhftolbVIJFqloAMAzKNix root@openstack.local	
+
+El archivo "Authorized_keys" debe tener permisos 600 y con su respectivo dueño
 
 Si luego de hacer todos los pasos anteriores no te conectas, coloca el modo debug del ssh::
 
