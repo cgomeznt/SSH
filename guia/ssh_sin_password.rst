@@ -15,6 +15,7 @@ Agregar o descomentar la siguientes línea en el archivo  /etc/ssh/sshd_config::
 	PubkeyAuthentication yes
 	AuthorizedKeysFile     %home/.ssh/authorized_keys .ssh/authorized_keys .ssh/authorized_keys2
 	UseDNS no
+	PasswordAuthentication no
 
 servidor-01 vamos a generar una llave pública, puede ser rsa o dsa, ssh ver 1 soporta rsa y ssh ver 2 soporta ambas. ::
 
